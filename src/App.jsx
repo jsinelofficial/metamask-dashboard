@@ -61,7 +61,7 @@ export default function CompetitiveIntelDashboard() {
     setLoading(true);
     setError(null);
     
-    const apiKey = import.meta.env.VITE_TWITTER_API_KEY;
+    const apiKey = import.meta.env.TWITTER_API_KEY;
     
     if (!apiKey) {
       setError('API key not configured. Add VITE_TWITTER_API_KEY to your .env file.');
