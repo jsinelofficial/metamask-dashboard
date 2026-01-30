@@ -56,18 +56,10 @@ export default function CompetitiveIntelDashboard() {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [competitorStats, setCompetitorStats] = useState({});
 
-  // Fetch tweets from Twitter API
+  // Fetch tweets from Twitter API via our serverless function
   const fetchCompetitorTweets = async () => {
     setLoading(true);
     setError(null);
-    
-    const apiKey = import.meta.env.TWITTER_API_KEY;
-    
-    if (!apiKey) {
-      setError('API key not configured. Add TWITTER_API_KEY to your .env file.');
-      setLoading(false);
-      return;
-    }
 
     const allTweets = [];
     const stats = {};
@@ -75,12 +67,7 @@ export default function CompetitiveIntelDashboard() {
     for (const competitor of competitors) {
       try {
         const response = await fetch(
-          `https://api.twitterapi.io/twitter/user/last_tweets?userName=${competitor.handle}`,
-          {
-            headers: {
-              'X-API-Key': apiKey,
-            },
-          }
+          `/api/tweets?userName=${competitor.handle}`
         );
 
         if (!response.ok) {
